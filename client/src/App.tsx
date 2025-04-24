@@ -8,21 +8,17 @@ import WelcomePage from "@/pages/WelcomePage";
 import SignUpPage from "@/pages/SignUpPage";
 import LoginPage from "@/pages/LoginPage";
 import ProfilePage from "@/pages/ProfilePage";
-import Navigation from "@/components/Navigation";
 
 function Router() {
   return (
     <div className="min-h-screen bg-white">
-      <Navigation />
-      <div className="container mx-auto px-4 pb-10">
-        <Switch>
-          <Route path="/" component={WelcomePage} />
-          <Route path="/signup" component={SignUpPage} />
-          <Route path="/login" component={LoginPage} />
-          <Route path="/profile" component={ProfilePage} />
-          <Route component={NotFound} />
-        </Switch>
-      </div>
+      <Switch>
+        <Route path="/" component={WelcomePage} />
+        <Route path="/signup" component={SignUpPage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path="/profile" component={ProfilePage} />
+        <Route component={NotFound} />
+      </Switch>
     </div>
   );
 }

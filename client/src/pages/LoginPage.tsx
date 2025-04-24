@@ -56,9 +56,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="py-6 md:py-10 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Login to your PopX account</h1>
-      <p className="text-muted-foreground mb-8">
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-1">Signin to your PopX account</h1>
+      <p className="text-gray-500 text-sm mb-6">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
       </p>
       
@@ -68,14 +68,14 @@ export default function LoginPage() {
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="space-y-2">
-                <FormLabel>Email address<span className="text-red-500">*</span></FormLabel>
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-[#6C25FF] text-xs">Email Address</FormLabel>
                 <FormControl>
                   <Input 
                     type="email" 
                     placeholder="Enter email address" 
                     {...field} 
-                    className="p-3 bg-input"
+                    className="p-3 border border-gray-300 rounded-md"
                   />
                 </FormControl>
               </FormItem>
@@ -86,14 +86,14 @@ export default function LoginPage() {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <FormItem className="space-y-2">
-                <FormLabel>Password<span className="text-red-500">*</span></FormLabel>
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-[#6C25FF] text-xs">Password</FormLabel>
                 <FormControl>
                   <Input 
                     type="password" 
                     placeholder="Enter password" 
                     {...field} 
-                    className="p-3 bg-input"
+                    className="p-3 border border-gray-300 rounded-md"
                   />
                 </FormControl>
               </FormItem>
@@ -103,7 +103,7 @@ export default function LoginPage() {
           <Button 
             type="submit" 
             disabled={isPending}
-            className="w-full bg-primary text-white py-6 h-auto font-medium"
+            className="w-full bg-gray-300 text-white py-3 h-auto font-medium mt-6 rounded-md"
           >
             Login
           </Button>

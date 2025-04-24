@@ -36,7 +36,7 @@ export default function SignUpPage() {
       email: "",
       password: "",
       companyName: "",
-      isAgency: "no"
+      isAgency: "yes" // Set default as "yes" to match the screenshot
     },
     mode: "onChange"
   });
@@ -81,22 +81,22 @@ export default function SignUpPage() {
   });
 
   return (
-    <div className="py-6 md:py-10 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Create your PopX account</h1>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-1">Create your PopX account</h1>
       
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 mt-5">
           <FormField
             control={form.control}
             name="fullName"
             render={({ field }) => (
-              <FormItem className="space-y-2">
-                <FormLabel>Full Name<span className="text-red-500">*</span></FormLabel>
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-[#6C25FF] text-xs">Full Name*</FormLabel>
                 <FormControl>
                   <Input 
-                    placeholder="Enter full name" 
+                    placeholder="Marry Doe" 
                     {...field} 
-                    className="p-3 bg-input"
+                    className="p-3 border border-gray-300 rounded-md"
                   />
                 </FormControl>
               </FormItem>
@@ -107,13 +107,13 @@ export default function SignUpPage() {
             control={form.control}
             name="phoneNumber"
             render={({ field }) => (
-              <FormItem className="space-y-2">
-                <FormLabel>Phone number<span className="text-red-500">*</span></FormLabel>
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-[#6C25FF] text-xs">Phone number*</FormLabel>
                 <FormControl>
                   <Input 
-                    placeholder="Enter phone number" 
+                    placeholder="Marry Doe" 
                     {...field} 
-                    className="p-3 bg-input"
+                    className="p-3 border border-gray-300 rounded-md"
                   />
                 </FormControl>
               </FormItem>
@@ -124,14 +124,14 @@ export default function SignUpPage() {
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="space-y-2">
-                <FormLabel>Email address<span className="text-red-500">*</span></FormLabel>
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-[#6C25FF] text-xs">Email address*</FormLabel>
                 <FormControl>
                   <Input 
                     type="email" 
-                    placeholder="Enter email address" 
+                    placeholder="Marry Doe" 
                     {...field} 
-                    className="p-3 bg-input"
+                    className="p-3 border border-gray-300 rounded-md"
                   />
                 </FormControl>
               </FormItem>
@@ -142,14 +142,14 @@ export default function SignUpPage() {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <FormItem className="space-y-2">
-                <FormLabel>Password<span className="text-red-500">*</span></FormLabel>
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-[#6C25FF] text-xs">Password*</FormLabel>
                 <FormControl>
                   <Input 
                     type="password" 
-                    placeholder="Enter password" 
+                    placeholder="Marry Doe" 
                     {...field} 
-                    className="p-3 bg-input"
+                    className="p-3 border border-gray-300 rounded-md"
                   />
                 </FormControl>
               </FormItem>
@@ -160,13 +160,13 @@ export default function SignUpPage() {
             control={form.control}
             name="companyName"
             render={({ field }) => (
-              <FormItem className="space-y-2">
-                <FormLabel>Company name</FormLabel>
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-[#6C25FF] text-xs">Company name</FormLabel>
                 <FormControl>
                   <Input 
-                    placeholder="Enter company name" 
+                    placeholder="Marry Doe" 
                     {...field} 
-                    className="p-3 bg-input"
+                    className="p-3 border border-gray-300 rounded-md"
                   />
                 </FormControl>
               </FormItem>
@@ -177,8 +177,8 @@ export default function SignUpPage() {
             control={form.control}
             name="isAgency"
             render={({ field }) => (
-              <FormItem className="space-y-2">
-                <FormLabel>Are you an Agency?<span className="text-red-500">*</span></FormLabel>
+              <FormItem className="space-y-1.5">
+                <FormLabel className="text-[#6C25FF] text-xs">Are you an Agency?*</FormLabel>
                 <FormControl>
                   <RadioGroup
                     onValueChange={field.onChange}
@@ -186,11 +186,11 @@ export default function SignUpPage() {
                     className="flex space-x-5"
                   >
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="yes" id="agency-yes" />
+                      <RadioGroupItem value="yes" id="agency-yes" className="text-[#6C25FF] border-[#6C25FF]" />
                       <label htmlFor="agency-yes" className="text-sm">Yes</label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="no" id="agency-no" />
+                      <RadioGroupItem value="no" id="agency-no" className="text-[#6C25FF] border-[#6C25FF]" />
                       <label htmlFor="agency-no" className="text-sm">No</label>
                     </div>
                   </RadioGroup>
@@ -202,11 +202,7 @@ export default function SignUpPage() {
           <Button 
             type="submit" 
             disabled={isPending || !formComplete}
-            className={`w-full py-6 h-auto font-medium ${
-              formComplete 
-                ? "bg-primary text-white" 
-                : "bg-[#ebebeb] text-[#8b8b8b] opacity-90"
-            }`}
+            className="w-full py-3 h-auto font-medium mt-6 rounded-md bg-[#6C25FF] text-white"
           >
             Create Account
           </Button>

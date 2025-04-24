@@ -11,10 +11,10 @@ export default function ProfilePage() {
 
   if (isLoading) {
     return (
-      <div className="py-6 md:py-10 max-w-md mx-auto">
-        <div className="h-20 w-full animate-pulse bg-gray-200 rounded mb-4"></div>
-        <div className="h-12 w-3/4 animate-pulse bg-gray-200 rounded mb-4"></div>
-        <div className="h-24 w-full animate-pulse bg-gray-200 rounded"></div>
+      <div className="w-full">
+        <div className="h-20 w-full animate-pulse bg-gray-200 mb-4"></div>
+        <div className="h-12 w-3/4 animate-pulse bg-gray-200 mb-4"></div>
+        <div className="h-24 w-full animate-pulse bg-gray-200"></div>
       </div>
     );
   }
@@ -24,35 +24,41 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="py-6 md:py-10 max-w-md mx-auto">
-      <div className="border-b pb-6 mb-6">
-        <div className="flex items-start">
+    <div className="w-full">
+      {/* Header with Account Settings */}
+      <div className="w-full bg-[#f7f8f8] p-4 border-b border-gray-200">
+        <h2 className="text-lg text-gray-700">Account Settings</h2>
+      </div>
+      
+      {/* User Profile Section */}
+      <div className="p-6">
+        <div className="flex items-start mb-4">
           <div className="relative mr-4">
-            <Avatar className="h-20 w-20 border-2 border-gray-300">
-              <AvatarFallback className="text-lg bg-gray-300 text-white">
+            <Avatar className="h-16 w-16 border border-gray-300">
+              <AvatarFallback className="text-lg text-white" style={{ backgroundImage: 'url(https://source.unsplash.com/random/80x80/?portrait)', backgroundSize: 'cover' }}>
                 {getInitials(user.fullName || '')}
               </AvatarFallback>
             </Avatar>
-            <div className="absolute bottom-0 right-0 w-6 h-6 bg-primary rounded-full flex items-center justify-center">
-              <Camera className="h-4 w-4 text-white" />
+            <div className="absolute bottom-0 right-0 w-5 h-5 bg-[#6C25FF] rounded-full flex items-center justify-center">
+              <Camera className="h-3 w-3 text-white" />
             </div>
           </div>
           <div>
-            <h2 className="text-xl font-bold">{user.fullName}</h2>
-            <p className="text-muted-foreground">{user.email || user.username}</p>
+            <h2 className="text-base font-medium">{user.fullName || 'Marry Doe'}</h2>
+            <p className="text-gray-500 text-sm">{user.email || user.username || 'Marry@Gmail.Com'}</p>
           </div>
         </div>
-      </div>
-      
-      <div>
-        <p className="text-muted-foreground mb-2">
-          {user.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.'}
-        </p>
+        
+        <div className="pt-2 pb-8 border-b border-dashed border-gray-300 mb-6">
+          <p className="text-gray-600 text-sm">
+            Lorem Ipsum Dolor Sit Amet, Consetetuir Sadipscing Elitr, Sed Diam Nonumy Eirmod Tempor Invidunt Ut Labore Et Dolore Magna Aliquyam Erat, Sed Diam
+          </p>
+        </div>
         
         <div className="mt-4 flex justify-between items-center">
           <div className="flex items-center">
-            <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-            <span className="text-sm text-muted-foreground">Active</span>
+            <div className="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+            <span className="text-xs text-gray-500">Active</span>
           </div>
         </div>
       </div>

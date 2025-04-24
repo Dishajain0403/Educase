@@ -1,4 +1,6 @@
 import { users, type User, type InsertUser } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -7,6 +9,37 @@ export interface IStorage {
   updateUser(id: number, userData: Partial<InsertUser>): Promise<User | undefined>;
 }
 
+export class DatabaseStorage implements IStorage {
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values({...insertUser, isActive: true})
+      .returning();
+    return user;
+  }
+
+  async updateUser(id: number, userData: Partial<InsertUser>): Promise<User | undefined> {
+    const [updatedUser] = await db
+      .update(users)
+      .set(userData)
+      .where(eq(users.id, id))
+      .returning();
+    
+    return updatedUser || undefined;
+  }
+}
+
+// For backward compatibility, we can keep the MemStorage implementation
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
   currentId: number;
@@ -14,18 +47,6 @@ export class MemStorage implements IStorage {
   constructor() {
     this.users = new Map();
     this.currentId = 1;
-    
-    // Add some sample data
-    this.createUser({
-      username: "sophia.johnson@gmail.com",
-      password: "password123",
-      fullName: "Sophia Johnson",
-      phoneNumber: "123-456-7890",
-      email: "sophia.johnson@gmail.com",
-      companyName: "Tech Solutions Inc.",
-      isAgency: "yes",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
-    });
   }
 
   async getUser(id: number): Promise<User | undefined> {
@@ -59,4 +80,5 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Switch to DatabaseStorage
+export const storage = new DatabaseStorage();

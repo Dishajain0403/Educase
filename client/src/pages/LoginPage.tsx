@@ -4,9 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { apiRequest } from "@/lib/queryClient";
 import { useMutation } from "@tanstack/react-query";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 
 const loginSchema = z.object({
@@ -57,8 +55,8 @@ export default function LoginPage() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-1">Signin to your PopX account</h1>
-      <p className="text-gray-500 text-sm mb-6">
+      <h1 className="text-2xl font-bold mb-1 text-[#1D2226]">Signin to your PopX account</h1>
+      <p className="text-[#6D7D8B] text-sm mb-6">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
       </p>
       
@@ -69,13 +67,13 @@ export default function LoginPage() {
             name="email"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="text-[#6C25FF] text-xs">Email Address</FormLabel>
+                <div className="text-[#6C25FF] text-xs font-normal">Email Address</div>
                 <FormControl>
-                  <Input 
+                  <input 
                     type="email" 
                     placeholder="Enter email address" 
                     {...field} 
-                    className="p-3 border border-gray-300 rounded-md"
+                    className="w-full p-3 border border-gray-300 rounded bg-white text-sm"
                   />
                 </FormControl>
               </FormItem>
@@ -87,26 +85,26 @@ export default function LoginPage() {
             name="password"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="text-[#6C25FF] text-xs">Password</FormLabel>
+                <div className="text-[#6C25FF] text-xs font-normal">Password</div>
                 <FormControl>
-                  <Input 
+                  <input 
                     type="password" 
                     placeholder="Enter password" 
                     {...field} 
-                    className="p-3 border border-gray-300 rounded-md"
+                    className="w-full p-3 border border-gray-300 rounded bg-white text-sm"
                   />
                 </FormControl>
               </FormItem>
             )}
           />
           
-          <Button 
+          <button 
             type="submit" 
             disabled={isPending}
-            className="w-full bg-gray-300 text-white py-3 h-auto font-medium mt-6 rounded-md"
+            className="w-full bg-[#CBCBCB] text-white py-3 h-auto font-medium mt-6 rounded text-base"
           >
             Login
-          </Button>
+          </button>
         </form>
       </Form>
     </div>

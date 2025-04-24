@@ -1,5 +1,4 @@
 import { useLocation } from "wouter";
-import { Button } from "@/components/ui/button";
 
 export default function WelcomePage() {
   const [_, setLocation] = useLocation();
@@ -7,24 +6,24 @@ export default function WelcomePage() {
   return (
     <div className="flex flex-col justify-end min-h-screen p-6">
       <div className="w-full mt-auto">
-        <h1 className="text-2xl font-bold mb-1">Welcome to PopX</h1>
-        <p className="text-gray-500 text-sm mb-6">
+        <h1 className="text-2xl font-bold mb-1 text-[#1D2226]">Welcome to PopX</h1>
+        <p className="text-[#6D7D8B] text-sm mb-8">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
         
         <div className="space-y-3">
-          <Button 
+          <button 
             onClick={() => setLocation("/signup")}
-            className="w-full bg-[#6C25FF] text-white py-3 h-auto font-medium rounded-md"
+            className="w-full bg-[#6C25FF] text-white py-3 h-auto font-medium rounded text-base"
           >
             Create Account
-          </Button>
-          <Button 
+          </button>
+          <button 
             onClick={() => setLocation("/login")}
-            className="w-full bg-[#ECECFD] text-[#6C25FF] py-3 h-auto border-none font-medium rounded-md"
+            className="w-full bg-[#ECECFD] text-[#6C25FF] py-3 h-auto border-none font-medium rounded text-base"
           >
             Already Registered? Login
-          </Button>
+          </button>
         </div>
       </div>
     </div>

@@ -1,14 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { apiRequest } from "@/lib/queryClient";
 import { useMutation } from "@tanstack/react-query";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
 import { insertUserSchema } from "@shared/schema";
 
@@ -18,7 +15,8 @@ const signupSchema = insertUserSchema.extend({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   companyName: z.string().optional(),
-  isAgency: z.enum(["yes", "no"])
+  isAgency: z.enum(["yes", "no"]),
+  description: z.string().optional()
 });
 
 type SignupFormValues = z.infer<typeof signupSchema>;
@@ -36,10 +34,13 @@ export default function SignUpPage() {
       email: "",
       password: "",
       companyName: "",
-      isAgency: "yes" // Set default as "yes" to match the screenshot
+      isAgency: "yes", 
+      description: ""
     },
     mode: "onChange"
   });
+
+  const isAgencyValue = form.watch("isAgency");
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: SignupFormValues) => {
@@ -48,8 +49,10 @@ export default function SignUpPage() {
         password: data.password,
         fullName: data.fullName,
         phoneNumber: data.phoneNumber,
-        companyName: data.companyName,
-        isAgency: data.isAgency
+        email: data.email,
+        companyName: data.companyName || "",
+        isAgency: data.isAgency,
+        description: data.description || ""
       };
       
       return apiRequest("POST", "/api/users/signup", userData);
@@ -74,29 +77,35 @@ export default function SignUpPage() {
     mutate(data);
   };
 
-  // Check form completeness on every change
-  form.watch((data) => {
-    const isValid = form.formState.isValid;
-    setFormComplete(isValid);
-  });
+  // Watch form values to check completeness
+  useEffect(() => {
+    const subscription = form.watch((value, { name, type }) => {
+      const isValid = form.formState.isValid;
+      setFormComplete(isValid);
+    });
+    return () => subscription.unsubscribe();
+  }, [form.watch, form.formState]);
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-1">Create your PopX account</h1>
+      <h1 className="text-2xl font-bold mb-1 text-[#1D2226]">Create your PopX account</h1>
+      <p className="text-[#6D7D8B] text-sm mb-6">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      </p>
       
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 mt-5">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
           <FormField
             control={form.control}
             name="fullName"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="text-[#6C25FF] text-xs">Full Name*</FormLabel>
+                <div className="text-[#6C25FF] text-xs font-normal">Full Name*</div>
                 <FormControl>
-                  <Input 
-                    placeholder="Marry Doe" 
+                  <input 
+                    placeholder="Enter full name" 
                     {...field} 
-                    className="p-3 border border-gray-300 rounded-md"
+                    className="w-full p-3 border border-gray-300 rounded bg-white text-sm"
                   />
                 </FormControl>
               </FormItem>
@@ -108,12 +117,12 @@ export default function SignUpPage() {
             name="phoneNumber"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="text-[#6C25FF] text-xs">Phone number*</FormLabel>
+                <div className="text-[#6C25FF] text-xs font-normal">Phone number*</div>
                 <FormControl>
-                  <Input 
-                    placeholder="Marry Doe" 
+                  <input 
+                    placeholder="Enter phone number" 
                     {...field} 
-                    className="p-3 border border-gray-300 rounded-md"
+                    className="w-full p-3 border border-gray-300 rounded bg-white text-sm"
                   />
                 </FormControl>
               </FormItem>
@@ -125,13 +134,13 @@ export default function SignUpPage() {
             name="email"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="text-[#6C25FF] text-xs">Email address*</FormLabel>
+                <div className="text-[#6C25FF] text-xs font-normal">Email address*</div>
                 <FormControl>
-                  <Input 
+                  <input 
                     type="email" 
-                    placeholder="Marry Doe" 
+                    placeholder="Enter email address" 
                     {...field} 
-                    className="p-3 border border-gray-300 rounded-md"
+                    className="w-full p-3 border border-gray-300 rounded bg-white text-sm"
                   />
                 </FormControl>
               </FormItem>
@@ -143,13 +152,13 @@ export default function SignUpPage() {
             name="password"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="text-[#6C25FF] text-xs">Password*</FormLabel>
+                <div className="text-[#6C25FF] text-xs font-normal">Password*</div>
                 <FormControl>
-                  <Input 
+                  <input 
                     type="password" 
-                    placeholder="Marry Doe" 
+                    placeholder="Enter password" 
                     {...field} 
-                    className="p-3 border border-gray-300 rounded-md"
+                    className="w-full p-3 border border-gray-300 rounded bg-white text-sm"
                   />
                 </FormControl>
               </FormItem>
@@ -161,12 +170,12 @@ export default function SignUpPage() {
             name="companyName"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <FormLabel className="text-[#6C25FF] text-xs">Company name</FormLabel>
+                <div className="text-[#6C25FF] text-xs font-normal">Company name</div>
                 <FormControl>
-                  <Input 
-                    placeholder="Marry Doe" 
+                  <input 
+                    placeholder="Enter company name" 
                     {...field} 
-                    className="p-3 border border-gray-300 rounded-md"
+                    className="w-full p-3 border border-gray-300 rounded bg-white text-sm"
                   />
                 </FormControl>
               </FormItem>
@@ -177,35 +186,64 @@ export default function SignUpPage() {
             control={form.control}
             name="isAgency"
             render={({ field }) => (
-              <FormItem className="space-y-1.5">
-                <FormLabel className="text-[#6C25FF] text-xs">Are you an Agency?*</FormLabel>
+              <FormItem className="space-y-2">
+                <div className="text-[#6C25FF] text-xs font-normal">Are you an Agency?*</div>
                 <FormControl>
-                  <RadioGroup
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    className="flex space-x-5"
-                  >
+                  <div className="flex gap-4">
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="yes" id="agency-yes" className="text-[#6C25FF] border-[#6C25FF]" />
-                      <label htmlFor="agency-yes" className="text-sm">Yes</label>
+                      <input 
+                        type="radio" 
+                        id="agency-yes" 
+                        value="yes" 
+                        checked={field.value === "yes"} 
+                        onChange={() => field.onChange("yes")}
+                        className="w-4 h-4 accent-[#6C25FF]"
+                      />
+                      <label htmlFor="agency-yes" className="cursor-pointer text-sm">Yes</label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="no" id="agency-no" className="text-[#6C25FF] border-[#6C25FF]" />
-                      <label htmlFor="agency-no" className="text-sm">No</label>
+                      <input 
+                        type="radio" 
+                        id="agency-no" 
+                        value="no" 
+                        checked={field.value === "no"} 
+                        onChange={() => field.onChange("no")}
+                        className="w-4 h-4 accent-[#6C25FF]"
+                      />
+                      <label htmlFor="agency-no" className="cursor-pointer text-sm">No</label>
                     </div>
-                  </RadioGroup>
+                  </div>
                 </FormControl>
               </FormItem>
             )}
           />
           
-          <Button 
+          {isAgencyValue === "yes" && (
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem className="space-y-1.5">
+                  <div className="text-[#6C25FF] text-xs font-normal">Add a description</div>
+                  <FormControl>
+                    <textarea
+                      placeholder="Enter description" 
+                      {...field} 
+                      className="w-full p-3 border border-gray-300 rounded bg-white text-sm min-h-[100px] resize-none"
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          )}
+          
+          <button 
             type="submit" 
-            disabled={isPending || !formComplete}
-            className="w-full py-3 h-auto font-medium mt-6 rounded-md bg-[#6C25FF] text-white"
+            disabled={isPending}
+            className={`w-full py-3 h-auto font-medium mt-6 rounded text-white text-base ${formComplete ? 'bg-[#6C25FF]' : 'bg-[#CBCBCB]'}`}
           >
             Create Account
-          </Button>
+          </button>
         </form>
       </Form>
     </div>

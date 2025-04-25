@@ -14,13 +14,13 @@ export default function WelcomePage() {
         <div className="space-y-3">
           <button 
             onClick={() => setLocation("/signup")}
-            className="w-full bg-[#6C25FF] text-white py-3 h-auto font-medium rounded text-base"
+            className="w-full bg-[#6C25FF] text-white py-3 h-auto font-medium rounded text-center"
           >
             Create Account
           </button>
           <button 
             onClick={() => setLocation("/login")}
-            className="w-full bg-[#ECECFD] text-[#6C25FF] py-3 h-auto border-none font-medium rounded text-base"
+            className="w-full bg-[#ECECFD] text-[#6C25FF] py-3 h-auto border-none font-medium rounded text-center"
           >
             Already Registered? Login
           </button>

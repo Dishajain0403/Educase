@@ -2,10 +2,7 @@ import { useLocation } from "wouter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { apiRequest } from "@/lib/queryClient";
-import { useMutation } from "@tanstack/react-query";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { useToast } from "@/hooks/use-toast";
 
 const loginSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
@@ -16,7 +13,6 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const [_, setLocation] = useLocation();
-  const { toast } = useToast();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -26,31 +22,9 @@ export default function LoginPage() {
     }
   });
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (data: LoginFormValues) => {
-      return apiRequest("POST", "/api/users/login", {
-        username: data.email,
-        password: data.password
-      });
-    },
-    onSuccess: () => {
-      toast({
-        title: "Logged in",
-        description: "You have been logged in successfully."
-      });
-      setLocation("/profile");
-    },
-    onError: (error) => {
-      toast({
-        title: "Error",
-        description: error.message || "Invalid email or password.",
-        variant: "destructive"
-      });
-    }
-  });
-
   const onSubmit = (data: LoginFormValues) => {
-    mutate(data);
+    // This is just UI design - no backend needed
+    setLocation("/profile");
   };
 
   return (
@@ -99,9 +73,8 @@ export default function LoginPage() {
           />
           
           <button 
-            type="submit" 
-            disabled={isPending}
-            className="w-full bg-[#CBCBCB] text-white py-3 h-auto font-medium mt-6 rounded text-base"
+            type="submit"
+            className="w-full bg-[#CBCBCB] text-white py-3 h-auto font-medium mt-6 rounded text-center"
           >
             Login
           </button>

@@ -33,9 +33,13 @@ export default function SignUpPage() {
     mode: "onChange",
   });
 
-  const onSubmit = (data: SignupFormValues) => {
-    // This is just UI design - no backend needed
-    setLocation("/profile");
+  const onSubmit = async (data: SignupFormValues) => {
+    try {
+      await mockApi.signup(data);
+      setLocation("/profile");
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
   };
 
   return (

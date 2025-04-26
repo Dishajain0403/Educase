@@ -22,9 +22,13 @@ export default function LoginPage() {
     },
   });
 
-  const onSubmit = (data: LoginFormValues) => {
-    // This is just UI design - no backend needed
-    setLocation("/profile");
+  const onSubmit = async (data: LoginFormValues) => {
+    try {
+      await mockApi.login(data.email, data.password);
+      setLocation("/profile");
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
   };
 
   return (

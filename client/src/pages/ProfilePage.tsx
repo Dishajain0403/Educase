@@ -17,7 +17,7 @@ export default function ProfilePage() {
             <div className="w-16 h-16 rounded-full overflow-hidden border border-[#D8D8D8]">
               <img
                 src="https://randomuser.me/api/portraits/women/44.jpg"
-                alt="Marry Doe"
+                alt={user?.fullName}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -26,8 +26,8 @@ export default function ProfilePage() {
             </div>
           </div>
           <div>
-            <h2 className="text-base font-medium text-[#1D2226]">Marry Doe</h2>
-            <p className="text-[#686868] text-sm">Marry@Gmail.Com</p>
+            <h2 className="text-base font-medium text-[#1D2226]">{user?.fullName}</h2>
+            <p className="text-[#686868] text-sm">{user?.email}</p>
           </div>
         </div>
 

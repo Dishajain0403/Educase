@@ -8,14 +8,14 @@ channel = "stable-24_05"
 [deployment]
 deploymentTarget = "autoscale"
 build = ["sh", "-c", "cd client && npm run build"]
-run = ["sh", "-c", "npm start"]
+run = ["sh", "-c", "npx serve -s client/dist"]
 
 [[ports]]
 localPort = 5000
 externalPort = 80
 
 [workflows]
-runButton = "Project"
+runButton = "Start Dev"
 
 [[workflows.workflow]]
 name = "Project"
@@ -53,3 +53,12 @@ args = "cd client"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run build"
+
+[[workflows.workflow]]
+name = "Start Dev"
+author = 41899253
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd client && npm run dev"

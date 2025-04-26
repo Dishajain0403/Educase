@@ -11,7 +11,7 @@ const signupSchema = z.object({
   email: z.string().min(1, "Email is required").email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   companyName: z.string().optional(),
-  isAgency: z.enum(["yes", "no"])
+  isAgency: z.enum(["yes", "no"]),
 });
 
 type SignupFormValues = z.infer<typeof signupSchema>;
@@ -23,14 +23,14 @@ export default function SignUpPage() {
   const form = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
-      fullName: "Marry Doe",
-      phoneNumber: "Marry Doe",
-      email: "Marry Doe",
-      password: "Marry Doe",
-      companyName: "Marry Doe",
-      isAgency: "yes"
+      fullName: "",
+      phoneNumber: "",
+      email: "",
+      password: "",
+      companyName: "",
+      isAgency: "yes",
     },
-    mode: "onChange"
+    mode: "onChange",
   });
 
   const onSubmit = (data: SignupFormValues) => {
@@ -40,8 +40,10 @@ export default function SignUpPage() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-1 text-[#1D2226]">Create your PopX account</h1>
-      
+      <h1 className="text-2xl font-bold mb-1 text-[#1D2226]">
+        Create your PopX account
+      </h1>
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 mt-5">
           <FormField
@@ -49,122 +51,144 @@ export default function SignUpPage() {
             name="fullName"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <div className="text-[#6C25FF] text-xs font-normal">Full Name*</div>
+                <div className="text-[#6C25FF] text-xs font-normal">
+                  Full Name*
+                </div>
                 <FormControl>
-                  <input 
-                    placeholder="Marry Doe" 
-                    {...field} 
+                  <input
+                    placeholder="Marry Doe"
+                    {...field}
                     className="w-full p-3 border border-gray-300 rounded bg-white text-sm"
                   />
                 </FormControl>
               </FormItem>
             )}
           />
-          
+
           <FormField
             control={form.control}
             name="phoneNumber"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <div className="text-[#6C25FF] text-xs font-normal">Phone number*</div>
+                <div className="text-[#6C25FF] text-xs font-normal">
+                  Phone number*
+                </div>
                 <FormControl>
-                  <input 
-                    placeholder="Marry Doe" 
-                    {...field} 
+                  <input
+                    placeholder="Marry Doe"
+                    {...field}
                     className="w-full p-3 border border-gray-300 rounded bg-white text-sm"
                   />
                 </FormControl>
               </FormItem>
             )}
           />
-          
+
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <div className="text-[#6C25FF] text-xs font-normal">Email address*</div>
+                <div className="text-[#6C25FF] text-xs font-normal">
+                  Email address*
+                </div>
                 <FormControl>
-                  <input 
-                    placeholder="Marry Doe" 
-                    {...field} 
+                  <input
+                    placeholder="Marry Doe"
+                    {...field}
                     className="w-full p-3 border border-gray-300 rounded bg-white text-sm"
                   />
                 </FormControl>
               </FormItem>
             )}
           />
-          
+
           <FormField
             control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <div className="text-[#6C25FF] text-xs font-normal">Password*</div>
+                <div className="text-[#6C25FF] text-xs font-normal">
+                  Password*
+                </div>
                 <FormControl>
-                  <input 
-                    type="password" 
-                    placeholder="Marry Doe" 
-                    {...field} 
+                  <input
+                    type="password"
+                    placeholder="Marry Doe"
+                    {...field}
                     className="w-full p-3 border border-gray-300 rounded bg-white text-sm"
                   />
                 </FormControl>
               </FormItem>
             )}
           />
-          
+
           <FormField
             control={form.control}
             name="companyName"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <div className="text-[#6C25FF] text-xs font-normal">Company name</div>
+                <div className="text-[#6C25FF] text-xs font-normal">
+                  Company name
+                </div>
                 <FormControl>
-                  <input 
-                    placeholder="Marry Doe" 
-                    {...field} 
+                  <input
+                    placeholder="Marry Doe"
+                    {...field}
                     className="w-full p-3 border border-gray-300 rounded bg-white text-sm"
                   />
                 </FormControl>
               </FormItem>
             )}
           />
-          
+
           <FormField
             control={form.control}
             name="isAgency"
             render={({ field }) => (
               <FormItem className="space-y-1.5">
-                <div className="text-[#6C25FF] text-xs font-normal">Are you an Agency?*</div>
+                <div className="text-[#6C25FF] text-xs font-normal">
+                  Are you an Agency?*
+                </div>
                 <FormControl>
                   <div className="flex space-x-5">
                     <div className="flex items-center space-x-2">
-                      <input 
-                        type="radio" 
-                        id="agency-yes" 
+                      <input
+                        type="radio"
+                        id="agency-yes"
                         checked={true}
                         className="w-4 h-4 accent-[#6C25FF]"
                         readOnly
                       />
-                      <label htmlFor="agency-yes" className="cursor-pointer text-sm">Yes</label>
+                      <label
+                        htmlFor="agency-yes"
+                        className="cursor-pointer text-sm"
+                      >
+                        Yes
+                      </label>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <input 
-                        type="radio" 
-                        id="agency-no" 
+                      <input
+                        type="radio"
+                        id="agency-no"
                         checked={false}
                         className="w-4 h-4 accent-[#6C25FF]"
                         readOnly
                       />
-                      <label htmlFor="agency-no" className="cursor-pointer text-sm">No</label>
+                      <label
+                        htmlFor="agency-no"
+                        className="cursor-pointer text-sm"
+                      >
+                        No
+                      </label>
                     </div>
                   </div>
                 </FormControl>
               </FormItem>
             )}
           />
-          
-          <button 
+
+          <button
             type="submit"
             className="w-full bg-[#6C25FF] text-white py-3 h-auto font-medium mt-6 rounded text-center"
           >

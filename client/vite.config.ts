@@ -18,4 +18,5 @@ export default defineConfig({
     outDir: path.resolve(__dirname, "..", "dist"),
     emptyOutDir: true,
   },
+  base: './',
 });
